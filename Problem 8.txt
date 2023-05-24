@@ -1,0 +1,87 @@
+Create database school;
+
+Create table Queries
+
+--student table
+create table student(id int primary key default nextval('s_id'),
+name string not null,
+standard int not null,
+division char(1) not null);
+
+------------------------------------------------------------------------------------------------------------
+
+--subject table
+create table subject(id int primary key default nextval('sub_id'),
+name string not null unique);
+
+------------------------------------------------------------------------------------------------------------
+
+--relation table
+create table relation(id int primary key default nextval ('rel_id'),
+student_id int references student(id),
+subject_id int references subject(id),
+unique(student_id,subject_id));
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Queries
+1.Add students with basic details like standard, division, and subjects. 
+insert
+	into
+	student(name,
+	standard,
+	division)
+values('hovert',
+12,
+'B');
+
+
+------------------------------------------------------------------------------------------------------------
+2.Update student details 
+update
+	student
+set
+	standard = 10
+where
+	name = 'pike';
+
+
+------------------------------------------------------------------------------------------------------------
+3.Get student details 
+select
+	*
+from
+	student;
+
+
+------------------------------------------------------------------------------------------------------------
+4.Filter students by standards, combinations of standards – division 
+select
+	*
+from
+	student
+where
+	standard = 12
+	and division = 'A';
+
+------------------------------------------------------------------------------------------------------------
+5.Filter students by subjects.  
+select
+	student.id,
+	student.name,
+	student.standard ,
+	student.division,
+	subject.name
+from
+	student
+left join student_subject on
+	student_subject.student_id = student.id
+left join subject on
+	subject.id = student_subject.subject_id
+where
+	subject.name = 'Maths'
+order by
+	student.id ;
+
+left join student_subject on student_subject.student_id = student.id left join subject on subject.id = student_subject.subject_id where subject.name = 'Maths' order by student.id ;
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
